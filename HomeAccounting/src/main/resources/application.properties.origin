@@ -1,0 +1,15 @@
+# Конфигурация источника данных (Data source)
+spring.datasource.driver-class-name=
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+# Конфигурация Hibernate
+spring.jpa.properties.hibernate.dialect=
+spring.jpa.properties.hibernate.show_sql=
+
+# Секретный ключ
+jwt_secret=
+
+# Пароль администротора
+admin_password=

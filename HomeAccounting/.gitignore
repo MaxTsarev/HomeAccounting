@@ -1,0 +1,33 @@
+# IDE-specific files
+*.classpath
+*.project
+*.settings/
+
+# Build output directories
+target/
+build/
+
+# Logs
+*.log
+
+# Dependency directories
+.mvn/
+
+# Static and template resources (exclude if auto-generated)
+# src/main/resources/static/
+# src/main/resources/templates/
+
+# Configuration files (create example version)
+src/main/resources/application.properties
+
+
+# Maven Wrapper (should be included for consistent builds)
+#mvnw
+#mvnw.cmd
+
+# Documentation (include if it's user-written)
+# HELP.md
+
+
+
+
