@@ -64,7 +64,7 @@
 ### -----------------------------------------
 
 ---
-### Endpoint ```/money_account/create```
+### Endpoint ```/money-account```
 ---
 **Метод** ```POST```
 - **Описание:**  создание счёта
@@ -87,7 +87,7 @@
     - Код ответа: ``201 Created``
 
 ---
-### Endpoint ```/money_account/read```
+### Endpoint ```/money-account```
 ---
 **Метод** ```GET```
 - **Описание:**  вывод информации о счетах
@@ -117,7 +117,7 @@
         ```
 
 ---
-### Endpoint ```/money_account/update{id}```
+### Endpoint ```/money-account/{id}```
 ---
 **Метод** ```PATCH```
 - **Описание:**  изменение счёта
@@ -140,7 +140,7 @@
     - Код ответа: ``200 OK``
 
 ---
-### Endpoint ```/money_account/delete{id}```
+### Endpoint ```/money-account/{id}```
 ---
 **Метод** ```DELETE```
 - **Описание:**  удаление счёта
@@ -160,7 +160,7 @@
 ### -----------------------------------------
 
 ---
-### Endpoint ```/category/create```
+### Endpoint ```/category```
 ---
 **Метод** ```POST```
 - **Описание:**  создание категории
@@ -182,7 +182,7 @@
     - Код ответа: ``201 Created``
 
 ---
-### Endpoint ```/category/read```
+### Endpoint ```/category```
 ---
 **Метод** ```GET```
 - **Описание:**  вывод информации о категориях
@@ -210,7 +210,7 @@
         ```
 
 ---
-### Endpoint ```/category/update{id}```
+### Endpoint ```/category/{id}```
 ---
 **Метод** ```PATCH```
 - **Описание:**  изменение категории
@@ -232,7 +232,7 @@
     - Код ответа: ``200 OK``
 
 ---
-### Endpoint ```/category/delete{id}```
+### Endpoint ```/category/{id}```
 ---
 **Метод** ```DELETE```
 - **Описание:**  удаление категории
@@ -252,7 +252,7 @@
 ### -----------------------------------------
 
 ---
-### Endpoint ```/expense_record/create```
+### Endpoint ```/expense-record```
 ---
 **Метод** ```POST```
 - **Описание:**  создание записи о расходах
@@ -276,7 +276,7 @@
     - Код ответа: ``201 Created``
 
 ---
-### Endpoint ```/expense_record/read```
+### Endpoint ```/expense-record```
 ---
 **Метод** ```GET```
 - **Описание:**  вывод записей о расходах
@@ -310,7 +310,7 @@
         ```
 
 ---
-### Endpoint ```/expense_record/update{id}```
+### Endpoint ```/expense-record/{id}```
 ---
 **Метод** ```PATCH```
 - **Описание:**  изменение записи о расходах
@@ -334,7 +334,7 @@
     - Код ответа: ``200 OK``
 
 ---
-### Endpoint ```/expense_record/delete{id}```
+### Endpoint ```/expense-record/{id}```
 ---
 **Метод** ```DELETE```
 - **Описание:**  удаление записи о расходах
@@ -349,7 +349,7 @@
 
     - Код ответа: ``200 OK``
 ---
-### Endpoint ```/expense_record//read_account/{id}```
+### Endpoint ```/expense-record/account/{id}```
 ---
 **Метод** ```GET```
 - **Описание:**  вывод записей о расходах по определённому счёту
@@ -385,7 +385,7 @@
         ```
 
 ---
-### Endpoint ```/expense_record//read_category/{id}```
+### Endpoint ```/expense-record/category/{id}```
 ---
 **Метод** ```GET```
 - **Описание:**  вывод записей о расходах по определённой категории

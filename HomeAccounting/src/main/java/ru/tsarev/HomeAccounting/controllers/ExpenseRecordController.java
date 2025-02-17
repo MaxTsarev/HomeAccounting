@@ -23,7 +23,7 @@ import ru.tsarev.HomeAccounting.exceptions.MyErrorResponse;
 import ru.tsarev.HomeAccounting.services.ExpenseRecordService;
 
 @RestController
-@RequestMapping("/expense_record")
+@RequestMapping("/expense-record")
 public class ExpenseRecordController {
 
 	private final ExpenseRecordService recordService;
@@ -32,35 +32,35 @@ public class ExpenseRecordController {
 		this.recordService = recordService;
 	}
 
-	@PostMapping("/create")
+	@PostMapping()
 	public ResponseEntity<HttpStatus> createRecord(@RequestBody @Valid ExpenseRecordDTO recordDTO) {
 		recordService.save(recordDTO);
 		return ResponseEntity.ok(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/read")
+	@GetMapping()
 	public ResponseEntity<List<ExpenseRecordDTO>> readRecord() {
 		return new ResponseEntity<>(recordService.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/read_account/{id}")
+	@GetMapping("/account/{id}")
 	public ResponseEntity<List<ExpenseRecordDTO>> readRecordOnAccount(@PathVariable int id) {
 		return new ResponseEntity<>(recordService.readRecordOnAccount(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/read_category/{id}")
+	@GetMapping("/category/{id}")
 	public ResponseEntity<List<ExpenseRecordDTO>> readRecordOnCategory(@PathVariable int id) {
 		return new ResponseEntity<>(recordService.readRecordOnCategory(id), HttpStatus.OK);
 	}
 
-	@PatchMapping("/update/{id}")
+	@PatchMapping("/{id}")
 	public ResponseEntity<HttpStatus> updateRecord(@PathVariable int id,
 			@RequestBody @Valid ExpenseRecordDTO recordDTO) {
 		recordService.updateExpenseRecord(id, recordDTO);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteRecord(@PathVariable int id) {
 		recordService.deleteExpenseRecord(id);
 		return ResponseEntity.ok(HttpStatus.OK);

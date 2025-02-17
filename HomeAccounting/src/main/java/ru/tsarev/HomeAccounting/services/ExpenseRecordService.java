@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +14,7 @@ import ru.tsarev.HomeAccounting.dto.ExpenseRecordDTO;
 import ru.tsarev.HomeAccounting.exceptions.CategoryNotFoundException;
 import ru.tsarev.HomeAccounting.exceptions.ExpenseRecordNotFoundException;
 import ru.tsarev.HomeAccounting.exceptions.MoneyAccountNotFoundException;
+import ru.tsarev.HomeAccounting.mappers.ExpenseRecordMapper;
 import ru.tsarev.HomeAccounting.models.ExpenseRecord;
 import ru.tsarev.HomeAccounting.models.MoneyAccount;
 import ru.tsarev.HomeAccounting.repositories.ExpenseRecordRepository;
@@ -26,14 +26,14 @@ public class ExpenseRecordService {
 	private final ExpenseRecordRepository recordRepository;
 	private final CategoryService categoryService;
 	private final MoneyAccountService moneyAccountService;
-	private final ModelMapper modelMapper;
+	private final ExpenseRecordMapper expenseRecordMapper;
 
 	public ExpenseRecordService(ExpenseRecordRepository recordRepository, CategoryService categoryService,
-			MoneyAccountService moneyAccountService, ModelMapper modelMapper) {
+			MoneyAccountService moneyAccountService, ExpenseRecordMapper expenseRecordMapper) {
 		this.recordRepository = recordRepository;
 		this.categoryService = categoryService;
 		this.moneyAccountService = moneyAccountService;
-		this.modelMapper = modelMapper;
+		this.expenseRecordMapper = expenseRecordMapper;
 	}
 
 	@Transactional
@@ -46,7 +46,7 @@ public class ExpenseRecordService {
 		}
 		MoneyAccount moneyAccount = moneyAccountService.getByName(expenseRecordDTO.getNameAccount()).get();
 		moneyAccount.setAmount(subtractValue(moneyAccount, expenseRecordDTO));
-		ExpenseRecord expenseRecord = convertToExpenseRecord(expenseRecordDTO);
+		ExpenseRecord expenseRecord = expenseRecordMapper.convertToExpenseRecord(expenseRecordDTO);
 		recordRepository.save(enrichExpenseRecord(expenseRecord, expenseRecordDTO));
 	}
 
@@ -55,7 +55,7 @@ public class ExpenseRecordService {
 		List<ExpenseRecord> expenseRecords = recordRepository.findAll();
 		List<ExpenseRecordDTO> expenseRecordDTOs = new ArrayList<>();
 		for (ExpenseRecord expenseRecord : expenseRecords) {
-			expenseRecordDTOs.add(convertToExpenseRecordDTO(expenseRecord));
+			expenseRecordDTOs.add(expenseRecordMapper.convertToExpenseRecordDTO(expenseRecord));
 		}
 		return expenseRecordDTOs;
 	}
@@ -68,7 +68,7 @@ public class ExpenseRecordService {
 		List<ExpenseRecord> listRecords = moneyAccountService.getMoneyAccountById(id).get().getRecords();
 		List<ExpenseRecordDTO> listRecordDTOs = new ArrayList<>();
 		for (ExpenseRecord exRecord : listRecords) {
-			listRecordDTOs.add(convertToExpenseRecordDTO(exRecord));
+			listRecordDTOs.add(expenseRecordMapper.convertToExpenseRecordDTO(exRecord));
 		}
 		return listRecordDTOs;
 	}
@@ -81,7 +81,7 @@ public class ExpenseRecordService {
 		List<ExpenseRecord> listRecords = categoryService.getCategoryById(id).get().getRecords();
 		List<ExpenseRecordDTO> listRecordDTOs = new ArrayList<>();
 		for (ExpenseRecord exRecord : listRecords) {
-			listRecordDTOs.add(convertToExpenseRecordDTO(exRecord));
+			listRecordDTOs.add(expenseRecordMapper.convertToExpenseRecordDTO(exRecord));
 		}
 		return listRecordDTOs;
 	}
@@ -119,14 +119,6 @@ public class ExpenseRecordService {
 		MoneyAccount moneyAccount = getExpenseRecordById(id).get().getAccount();
 		moneyAccount.setAmount(moneyAccount.getAmount().add(expenseRecord.getSum()));
 		recordRepository.deleteById(id);
-	}
-
-	public ExpenseRecord convertToExpenseRecord(ExpenseRecordDTO expenseRecordDTO) {
-		return modelMapper.map(expenseRecordDTO, ExpenseRecord.class);
-	}
-
-	public ExpenseRecordDTO convertToExpenseRecordDTO(ExpenseRecord expenseRecord) {
-		return modelMapper.map(expenseRecord, ExpenseRecordDTO.class);
 	}
 
 	public ExpenseRecord enrichExpenseRecord(ExpenseRecord expenseRecord, ExpenseRecordDTO expenseRecordDTO) {

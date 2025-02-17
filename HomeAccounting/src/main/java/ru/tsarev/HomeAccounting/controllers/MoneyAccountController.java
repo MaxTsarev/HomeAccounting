@@ -21,7 +21,7 @@ import ru.tsarev.HomeAccounting.exceptions.MyErrorResponse;
 import ru.tsarev.HomeAccounting.services.MoneyAccountService;
 
 @RestController
-@RequestMapping("/money_account")
+@RequestMapping("/money-account")
 public class MoneyAccountController {
 
 	private final MoneyAccountService accountService;
@@ -30,25 +30,25 @@ public class MoneyAccountController {
 		this.accountService = accountService;
 	}
 
-	@PostMapping("/create")
+	@PostMapping()
 	public ResponseEntity<HttpStatus> createMoneyAccount(@RequestBody @Valid MoneyAccountDTO moneyAccountDTO) {
 		accountService.save(moneyAccountDTO);
 		return ResponseEntity.ok(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/read")
+	@GetMapping()
 	public ResponseEntity<List<MoneyAccountDTO>> findAll() {
 		return new ResponseEntity<>(accountService.findAll(), HttpStatus.OK);
 	}
 
-	@PatchMapping("/update/{id}")
+	@PatchMapping("/{id}")
 	public ResponseEntity<HttpStatus> updateMoneyAccount(@PathVariable int id,
 			@RequestBody @Valid MoneyAccountDTO accountDTO) {
 		accountService.updateMoneyAccount(id, accountDTO);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteMoneyAccount(@PathVariable int id) {
 		accountService.deleteMoneyAccount(id);
 		return ResponseEntity.ok(HttpStatus.OK);

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.tsarev.HomeAccounting.dto.MoneyAccountDTO;
 import ru.tsarev.HomeAccounting.exceptions.MoneyAccountNotFoundException;
+import ru.tsarev.HomeAccounting.mappers.MoneyAccountMapper;
 import ru.tsarev.HomeAccounting.models.MoneyAccount;
 import ru.tsarev.HomeAccounting.repositories.MoneyAccountRepository;
 
@@ -18,16 +18,16 @@ import ru.tsarev.HomeAccounting.repositories.MoneyAccountRepository;
 public class MoneyAccountService {
 
 	private final MoneyAccountRepository accountRepository;
-	private final ModelMapper modelMapper;
+	private final MoneyAccountMapper moneyAccountMapper;
 
-	public MoneyAccountService(MoneyAccountRepository accountRepository, ModelMapper modelMapper) {
+	public MoneyAccountService(MoneyAccountRepository accountRepository, MoneyAccountMapper moneyAccountMapper) {
 		this.accountRepository = accountRepository;
-		this.modelMapper = modelMapper;
+		this.moneyAccountMapper = moneyAccountMapper;
 	}
 
 	@Transactional
 	public void save(MoneyAccountDTO accountDTO) {
-		accountRepository.save(convertToMoneyAccount(accountDTO));
+		accountRepository.save(moneyAccountMapper.convertToMoneyAccount(accountDTO));
 	}
 
 	@Transactional
@@ -35,7 +35,7 @@ public class MoneyAccountService {
 		List<MoneyAccount> moneyAccounts = accountRepository.findAll();
 		List<MoneyAccountDTO> moneyAccountsDTO = new ArrayList<>();
 		for (MoneyAccount account : moneyAccounts) {
-			moneyAccountsDTO.add(convertToMoneyAccountDTO(account));
+			moneyAccountsDTO.add(moneyAccountMapper.convertToMoneyAccountDTO(account));
 		}
 		return moneyAccountsDTO;
 	}
@@ -66,13 +66,5 @@ public class MoneyAccountService {
 			throw new MoneyAccountNotFoundException();
 		}
 		accountRepository.deleteById(id);
-	}
-
-	public MoneyAccount convertToMoneyAccount(MoneyAccountDTO moneyAccountDTO) {
-		return modelMapper.map(moneyAccountDTO, MoneyAccount.class);
-	}
-
-	public MoneyAccountDTO convertToMoneyAccountDTO(MoneyAccount moneyAccount) {
-		return modelMapper.map(moneyAccount, MoneyAccountDTO.class);
 	}
 }

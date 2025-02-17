@@ -30,25 +30,25 @@ public class CategoryController {
 		this.categoryService = categoryService;
 	}
 
-	@PostMapping("/create")
+	@PostMapping()
 	public ResponseEntity<HttpStatus> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
 		categoryService.save(categoryDTO);
 		return ResponseEntity.ok(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/read")
+	@GetMapping()
 	public ResponseEntity<List<CategoryDTO>> readCategory() {
 		return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
 	}
 
-	@PatchMapping("/update/{id}")
+	@PatchMapping("/{id}")
 	public ResponseEntity<HttpStatus> updateCategory(@PathVariable int id,
 			@RequestBody @Valid CategoryDTO categoryDTO) {
 		categoryService.updateCategory(id, categoryDTO);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<HttpStatus> deleteCategory(@PathVariable int id) {
 		categoryService.deleteCategory(id);
 		return ResponseEntity.ok(HttpStatus.OK);
